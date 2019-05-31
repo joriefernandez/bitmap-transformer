@@ -3,12 +3,90 @@
  */
 package cli;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
+
+    //Main CLI
+    public static void main(String[] args) {
+        try {
+            //read and process image
+            readImage(args);
+        } catch (IOException e) {
+            System.out.println("Cannot read the file.");
+            e.printStackTrace();
+        } catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Argument should be in format: 'inputFile outputFile transformName' ");
+            e.printStackTrace();
+        }
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+    /**
+     * Function to read and process image
+     * @param theArgs user input arguments: input output transform
+     * @throws IOException error if file not read
+     */
+    public static void readImage(String[] theArgs) throws IOException{
+        try {
+            //Open input file
+            File input = new File(theArgs[0]);
+            System.out.println("Opening input file: " + input);
+            //Read file as image
+            BufferedImage inputImage = ImageIO.read(input);
+            //Create a Bitmap instance
+            Bitmap bitImage = new Bitmap(inputImage);
+
+            //transform image
+            BufferedImage newImage = transform(bitImage, theArgs[2]);
+
+            //write image to output file
+            writeToFile(newImage, theArgs[1]);
+        } catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Argument should be three. ");
+            e.printStackTrace();
+        }
+
     }
+
+    /**
+     * Function to transform the image based from the user third argument
+     * @param img image to be transformed
+     * @param transformName options: grayscale, invert, blur, xray
+     * @return transformed image
+     */
+    public static BufferedImage transform(Bitmap img, String transformName){
+        switch(transformName){
+            case "grayscale":
+                return img.grayscale();
+            case "blur":
+                return img.blur();
+            case "invert":
+                return img.invert();
+            case "flip":
+                return img.xray();
+            default:
+                System.out.println("USAGE: ./gradlew run --args 'input output tranform' ");
+                System.out.println("transform options: grayscale, blur, invert, xray");
+        }
+
+        return img.getImage();
+    }
+
+    /**
+     *  Save image to output file.
+     * @param img transformed iamge to be saved.
+     * @param out output file
+     */
+    public static void writeToFile(BufferedImage img, String out){
+        try{
+            System.out.println("Writing image to " + out);
+            ImageIO.write(img, "bmp", new File(out));
+        }catch(IOException e){
+            System.out.println("Error: " + e);
+        }
+    }
+
 }
