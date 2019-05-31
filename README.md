@@ -3,7 +3,7 @@ Authors: Jorie Fernandez, Yuan Gao.
 Used to transform the user input image.
 
 ## About the Program
-To run: ./gradlew run --args 'inputFilePath outputFilePath transform'
+To run using terminal: ./gradlew run --args 'inputFilePath outputFilePath transform'
 
 ### Options for tranform arguments:
 1. grayscale - transform into grayscale image
