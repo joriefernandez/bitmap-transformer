@@ -42,6 +42,10 @@ public class App {
                 return img.grayscale();
             case "blur":
                 return img.blur();
+            case "invert":
+                return img.invert();
+            case "flip":
+                return img.xray();
             default:
                 return img.getImage();
         }

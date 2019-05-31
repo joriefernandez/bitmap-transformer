@@ -1,6 +1,7 @@
 package cli;
 
 import java.awt.image.BufferedImage;
+import java.sql.SQLOutput;
 
 public class Bitmap {
 
@@ -58,6 +59,50 @@ public class Bitmap {
         }
         return image;
     }
+
+    //Method to invert color of image
+    public static BufferedImage invert(){
+        for(int h = 0; h < height; h++ ){
+            for(int w = 0; w < width; w++){
+                int rgbVal = image.getRGB(w, h);
+
+                int alpha = getRGBValue(rgbVal, 24);
+                int red = getRGBValue(rgbVal, 16);
+                int green = getRGBValue(rgbVal, 8);
+                int blue = getRGBValue(rgbVal, 0);
+
+
+                //replace RGB value with avg
+                rgbVal = (alpha << 24) | ((255 - red) << 16) | ( (255 - green) << 8) | (255 - blue);
+                image.setRGB(w, h, rgbVal);
+            }
+        }
+        return image;
+    }
+
+    //Method to invert color of half image
+    public static BufferedImage xray(){
+
+        for(int h = 0; h < height; h++ ){
+
+            for(int w = 0; w < width/2; w++){
+                int rgbVal = image.getRGB(w, h);
+                int alpha = getRGBValue(rgbVal, 24);
+                int red = getRGBValue(rgbVal, 16);
+                int green = getRGBValue(rgbVal, 8);
+                int blue = getRGBValue(rgbVal, 0);
+
+
+                //replace RGB value with avg
+                rgbVal = (alpha << 24) | ((255 - red) << 16) | ( (255 - green) << 8) | (255 - blue);
+                image.setRGB(w, h, rgbVal);
+
+            }
+        }
+        return image;
+    }
+
+
 
     //Return image
     public static BufferedImage getImage(){
