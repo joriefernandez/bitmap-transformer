@@ -3,12 +3,57 @@
  */
 package cli;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        try {
+            readImage(args);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public static void readImage(String[] theArgs) throws IOException{
+        //Open input file
+        File input = new File(theArgs[0]);
+        System.out.println(input.getAbsolutePath());
+        //Read file as image
+        BufferedImage inputImage = ImageIO.read(input);
+        //Create a Bitmap instance
+        Bitmap bitImage = new Bitmap(inputImage);
+
+        //transform image
+        BufferedImage newImage = transform(bitImage, theArgs[2]);
+
+        //write image to output file
+        writeToFile(newImage, theArgs[1]);
+
+
+    }
+
+    public static BufferedImage transform(Bitmap img, String transformName){
+        switch(transformName){
+            case "grayscale":
+                return img.grayscale();
+            case "blur":
+                return img.blur();
+            default:
+                return img.getImage();
+        }
+    }
+
+    public static void writeToFile(BufferedImage img, String out){
+        try{
+            System.out.println("Writing image to " + out);
+            ImageIO.write(img, "bmp", new File(out));
+        }catch(IOException e){
+            System.out.println("Error: " + e);
+        }
+    }
+
 }
