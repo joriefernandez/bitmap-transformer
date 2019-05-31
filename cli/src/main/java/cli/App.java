@@ -14,25 +14,33 @@ public class App {
         try {
             readImage(args);
         } catch (IOException e) {
+            System.out.println("Cannot read the file.");
+            e.printStackTrace();
+        } catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Argument should be in format: 'inputFile outputFile transformName' ");
             e.printStackTrace();
         }
     }
 
     public static void readImage(String[] theArgs) throws IOException{
-        //Open input file
-        File input = new File(theArgs[0]);
-        System.out.println(input.getAbsolutePath());
-        //Read file as image
-        BufferedImage inputImage = ImageIO.read(input);
-        //Create a Bitmap instance
-        Bitmap bitImage = new Bitmap(inputImage);
+        try {
+            //Open input file
+            File input = new File(theArgs[0]);
+            System.out.println("Opening input file: " + input);
+            //Read file as image
+            BufferedImage inputImage = ImageIO.read(input);
+            //Create a Bitmap instance
+            Bitmap bitImage = new Bitmap(inputImage);
 
-        //transform image
-        BufferedImage newImage = transform(bitImage, theArgs[2]);
+            //transform image
+            BufferedImage newImage = transform(bitImage, theArgs[2]);
 
-        //write image to output file
-        writeToFile(newImage, theArgs[1]);
-
+            //write image to output file
+            writeToFile(newImage, theArgs[1]);
+        } catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Argument should be three. ");
+            e.printStackTrace();
+        }
 
     }
 

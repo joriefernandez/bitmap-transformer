@@ -1,7 +1,7 @@
 package cli;
 
 import java.awt.image.BufferedImage;
-import java.sql.SQLOutput;
+
 
 public class Bitmap {
 
