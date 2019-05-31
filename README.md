@@ -5,7 +5,7 @@ Used to transform the user input image.
 ## About the Program
 To run using terminal: ./gradlew run --args 'inputFilePath outputFilePath transform'
 
-### Options for tranform arguments:
+### Options for tranform argument:
 1. grayscale - transform into grayscale image
 2. blur - transform into blurred image
 3. invert - transform into inverted color image
