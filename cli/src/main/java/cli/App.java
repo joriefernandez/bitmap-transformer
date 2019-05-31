@@ -10,8 +10,10 @@ import java.io.IOException;
 
 public class App {
 
+    //Main CLI
     public static void main(String[] args) {
         try {
+            //read and process image
             readImage(args);
         } catch (IOException e) {
             System.out.println("Cannot read the file.");
@@ -22,6 +24,11 @@ public class App {
         }
     }
 
+    /**
+     * Function to read and process image
+     * @param theArgs user input arguments: input output transform
+     * @throws IOException error if file not read
+     */
     public static void readImage(String[] theArgs) throws IOException{
         try {
             //Open input file
@@ -44,6 +51,12 @@ public class App {
 
     }
 
+    /**
+     * Function to transform the image based from the user third argument
+     * @param img image to be transformed
+     * @param transformName options: grayscale, invert, blur, xray
+     * @return transformed image
+     */
     public static BufferedImage transform(Bitmap img, String transformName){
         switch(transformName){
             case "grayscale":
@@ -55,10 +68,18 @@ public class App {
             case "flip":
                 return img.xray();
             default:
-                return img.getImage();
+                System.out.println("USAGE: ./gradlew run --args 'input output tranform' ");
+                System.out.println("transform options: grayscale, blur, invert, xray");
         }
+
+        return img.getImage();
     }
 
+    /**
+     *  Save image to output file.
+     * @param img transformed iamge to be saved.
+     * @param out output file
+     */
     public static void writeToFile(BufferedImage img, String out){
         try{
             System.out.println("Writing image to " + out);

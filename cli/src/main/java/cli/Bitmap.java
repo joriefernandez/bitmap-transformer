@@ -1,3 +1,7 @@
+/**
+ *  Reference https://www.dyclassroom.com/image-processing-project/how-to-convert-a-color-image-into-negative
+ */
+
 package cli;
 
 import java.awt.image.BufferedImage;
@@ -5,8 +9,11 @@ import java.awt.image.BufferedImage;
 
 public class Bitmap {
 
+    //Image to be modified
     private static BufferedImage image;
+    // Image width
     private static int width;
+    //Image height
     private static int height;
 
     //Constructor
